@@ -14,8 +14,8 @@ class CalendarHeader extends StatelessWidget {
   final DateTime focusedMonth;
   final CalendarFormat calendarFormat;
   final HeaderStyle headerStyle;
-  final VoidCallback onLeftChevronTap;
-  final VoidCallback onRightChevronTap;
+  final VoidCallback onLeftChevronTap, onDoubleLeftChevronTap;
+  final VoidCallback onRightChevronTap, onDoubleRightChevronTap;
   final VoidCallback onHeaderTap;
   final VoidCallback onHeaderLongPress;
   final ValueChanged<CalendarFormat> onFormatButtonTap;
@@ -35,12 +35,15 @@ class CalendarHeader extends StatelessWidget {
     required this.onFormatButtonTap,
     required this.availableCalendarFormats,
     this.headerTitleBuilder,
+    required this.onDoubleLeftChevronTap,
+    required this.onDoubleRightChevronTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final text = headerStyle.titleTextFormatter?.call(focusedMonth, locale) ??
-        DateFormat.yMMMM(locale).format(focusedMonth);
+    final text =
+        headerStyle.titleTextFormatter?.call(focusedMonth, locale) ??
+            DateFormat.yMMMM(locale).format(focusedMonth);
 
     return Container(
       decoration: headerStyle.decoration,
@@ -49,6 +52,13 @@ class CalendarHeader extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
+          if (headerStyle.doubleLeftChevronVisible)
+            CustomIconButton(
+              icon: headerStyle.doubleLeftChevronIcon,
+              onTap: onDoubleLeftChevronTap,
+              margin: headerStyle.leftChevronMargin,
+              padding: headerStyle.leftChevronPadding,
+            ),
           if (headerStyle.leftChevronVisible)
             CustomIconButton(
               icon: headerStyle.leftChevronIcon,
@@ -56,13 +66,14 @@ class CalendarHeader extends StatelessWidget {
               margin: headerStyle.leftChevronMargin,
               padding: headerStyle.leftChevronPadding,
             ),
+
           Expanded(
             child: headerTitleBuilder?.call(context, focusedMonth) ??
                 GestureDetector(
                   onTap: onHeaderTap,
                   onLongPress: onHeaderLongPress,
                   child: Text(
-                    text,
+                    capitalize( text),
                     style: headerStyle.titleTextStyle,
                     textAlign: headerStyle.titleCentered
                         ? TextAlign.center
@@ -84,6 +95,7 @@ class CalendarHeader extends StatelessWidget {
                 showsNextFormat: headerStyle.formatButtonShowsNext,
               ),
             ),
+
           if (headerStyle.rightChevronVisible)
             CustomIconButton(
               icon: headerStyle.rightChevronIcon,
@@ -91,8 +103,19 @@ class CalendarHeader extends StatelessWidget {
               margin: headerStyle.rightChevronMargin,
               padding: headerStyle.rightChevronPadding,
             ),
+          if (headerStyle.doubleRightChevronVisible)
+            CustomIconButton(
+              icon: headerStyle.doubleRightChevronIcon,
+              onTap:onDoubleRightChevronTap ,
+              margin: headerStyle.leftChevronMargin,
+              padding: headerStyle.leftChevronPadding,
+            ),
         ],
       ),
     );
+  }
+  String capitalize(String text) {
+    return "${text[0].toUpperCase()}${text.substring(1).toLowerCase
+      ()}";
   }
 }

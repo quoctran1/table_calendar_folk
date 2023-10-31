@@ -63,18 +63,18 @@ class HeaderStyle {
   /// Widget used for left chevron.
   ///
   /// Tapping on it will navigate to previous calendar page.
-  final Widget leftChevronIcon;
+  final Widget leftChevronIcon,doubleLeftChevronIcon;
 
   /// Widget used for right chevron.
   ///
   /// Tapping on it will navigate to next calendar page.
-  final Widget rightChevronIcon;
+  final Widget rightChevronIcon,doubleRightChevronIcon;
 
   /// Determines left chevron's visibility.
-  final bool leftChevronVisible;
+  final bool leftChevronVisible, doubleLeftChevronVisible;
 
   /// Determines right chevron's visibility.
-  final bool rightChevronVisible;
+  final bool rightChevronVisible, doubleRightChevronVisible;
 
   /// Decoration of the header.
   final BoxDecoration decoration;
@@ -95,12 +95,19 @@ class HeaderStyle {
     this.headerPadding = const EdgeInsets.symmetric(vertical: 8.0),
     this.formatButtonPadding =
         const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
-    this.leftChevronPadding = const EdgeInsets.all(12.0),
-    this.rightChevronPadding = const EdgeInsets.all(12.0),
-    this.leftChevronMargin = const EdgeInsets.symmetric(horizontal: 8.0),
-    this.rightChevronMargin = const EdgeInsets.symmetric(horizontal: 8.0),
+    this.leftChevronPadding = const EdgeInsets.all(8),
+    this.rightChevronPadding = const EdgeInsets.all(8),
+    this.leftChevronMargin =
+        const EdgeInsets.symmetric(horizontal: 4.0),
+    this.rightChevronMargin =
+        const EdgeInsets.symmetric(horizontal: 4.0),
     this.leftChevronIcon = const Icon(Icons.chevron_left),
     this.rightChevronIcon = const Icon(Icons.chevron_right),
+    this.doubleLeftChevronIcon= const Icon(Icons.keyboard_double_arrow_left_outlined), this
+        .doubleRightChevronIcon= const Icon(Icons
+        .keyboard_double_arrow_right_outlined),
+    this.doubleLeftChevronVisible = true,
+    this.doubleRightChevronVisible = true,
     this.leftChevronVisible = true,
     this.rightChevronVisible = true,
     this.decoration = const BoxDecoration(),
